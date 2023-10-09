@@ -5,7 +5,8 @@ import * as mongoDB from "mongodb";
 import { log } from 'console';
 
 export default {
-    getElementos: (async (_req,_res)=> {   
+    getElementos: (async (_req,_res)=> {  
+      _res.set('Access-Control-Allow-Origin', 'http://localhost:4200'); 
          _res.status(200).send(await ConvertColectionToElemento(await dbPromise)) 
     }),
 

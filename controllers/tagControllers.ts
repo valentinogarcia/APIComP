@@ -7,13 +7,14 @@ import { tag } from '../models/tag';
 
 export default {
     getTags: (async (_req,_res)=> {   
+      _res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
          _res.status(200).send(await ConvertColectionToTag(await dbPromise)) 
     }),
 
     getTag:(async(_req,_res)=> {
       const tags = ConvertColectionToTag(await dbPromise);
       const taginho = (await tags).find( (p) => p.nombre === _req.params.tag  )
-       _res.status(200).send(elemento)  
+      _res.status(200).send(taginho)  
     }),
     
     addTag:(async (_req,_res) => { 
@@ -48,7 +49,7 @@ export default {
     deleteTag:(async (_req, _res) => {
         try {
           const r = await collections.tags?.deleteOne( { nombre: _req.body.nombre } );
-      
+          
           if (r && r.deletedCount) {
             _res.status(202).send(`Se fue a cagar! yei `);
           } else if (!r) {

@@ -23,11 +23,16 @@ export async function ConvertColectionToElemento(db:mongoDB.Db): Promise<element
 export async function ConvertColectionToTag(db:mongoDB.Db): Promise<tag[]> {
   const col = await db.collection(COLLECTION_NAME_TAGS).find().toArray();
   let tags:tag[]=[]
-  col.forEach( (obj)=>{ const element:tag = new tag(obj.seccion,obj.subsecciones);tags.push(element) } )
+  col.forEach( (obj)=>{ const element:tag = new tag(obj.nombre||"bruh",obj.finales||null ,obj.subsecciones||null);tags.push(element);} )
+  
   return tags
 }
 export async function ConvertDocumentToElemento(document:mongoDB.WithId<mongoDB.BSON.Document>) :Promise<elemento>{
   let element:elemento = new elemento( document.nombre,document.tags,document.stats )
+  return element
+}
+export async function ConvertDocumentToTag(document:mongoDB.WithId<mongoDB.BSON.Document>) :Promise<tag>{
+  let element:tag = new tag(document.nombre||"bruh",document.finales||null ,document.subsecciones||null)
   return element
 }
 

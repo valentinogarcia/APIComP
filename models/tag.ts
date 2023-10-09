@@ -1,10 +1,11 @@
-import { Subsecciones } from "./Subsecciones";
+
 
 export class tag{
     nombre: String;
-    subsecciones: Array<Subsecciones>;
+    finales: Array<string>;
+    subsecciones: Array<tag>;
 
-    constructor(inNombre: String,inSubsecciones:Array<Subsecciones>){
-        this.nombre = inNombre;  this.subsecciones=inSubsecciones;
+    constructor(inNombre: String, inFinales: Array<string>,inSubsecciones:Array<tag>){
+        this.nombre = inNombre;  this.subsecciones=inSubsecciones;this.finales=inFinales;
     }
 }

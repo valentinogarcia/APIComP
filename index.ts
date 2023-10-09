@@ -3,6 +3,7 @@ import swaggerDocs from './swagger';
 import { paisRoutes } from "./routes/elementoRoutes";
 import { UserRoutes } from './routes/userRoutes';
 import { tagRoutes} from './routes/tagRoutes';
+import cors from "cors"
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,7 @@ tagRoutes(app)
 
 
 async function main() {
+  app.use( cors({origin:"http://localhost:4200"}) )
   app.get('/', (_req , _res) => _res.send('Bienvenido a mi API REST!'));
 
   app.listen(port, () => {console.log(`Escuchando en el puerto ${port}!`); 
