@@ -3,12 +3,22 @@ import swaggerDocs from './swagger';
 import { paisRoutes } from "./routes/elementoRoutes";
 import { UserRoutes } from './routes/userRoutes';
 import { tagRoutes} from './routes/tagRoutes';
+import { ImgRoutes } from './routes/imgRoutes';
+import fileUpload,{UploadedFile} from 'express-fileupload';
 import cors from "cors"
-
+const fileUploadConfig={
+  limits:{
+    fileSize:4*(1024**2)
+  },
+  createParentPath:true,
+  abortOnLimit:true
+}
 const app = express();
-app.use(express.json());
+//app.use(express.static('public'));
 const port = 3030
-
+app.use(express.json());
+app.use(fileUpload(fileUploadConfig))
+ImgRoutes(app)
 paisRoutes(app)
 UserRoutes(app)
 tagRoutes(app)

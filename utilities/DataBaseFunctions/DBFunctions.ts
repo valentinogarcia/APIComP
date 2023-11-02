@@ -2,6 +2,7 @@
 import * as mongoDB from "mongodb";
 import { elemento} from '../../models/elemento';
 import { tag } from "../../models/tag";
+import {sys} from "typescript";
 export const DB_CONN_STRING="mongodb://localhost:27017"
 export const DB_NAME="Comp"
 export const COLLECTION_NAME_ELEMENTOS="elementos"
@@ -10,8 +11,21 @@ export const COLLECTION_NAME_TAGS="tags"
 
 export const collections: { elementos?: mongoDB.Collection,tags?:mongoDB.Collection } = {}
 
+const dest:string='../../imgs'
+
 export async function findElemento(elementos:elemento[],target:string) {
   return elementos.find( (elemento)=> elemento.nombre.toLowerCase() === target.toLocaleLowerCase() )
+  
+}
+export async function UploadIMG( _req,_res ){
+  try {        
+    console.log(_req);
+    
+  } catch (error) {
+    console.log(error);
+    
+}
+  
 }
 
 export async function ConvertColectionToElemento(db:mongoDB.Db): Promise<elemento[]> {
