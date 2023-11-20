@@ -18,7 +18,7 @@ export async function findElemento(elementos:elemento[],target:string) {
 export async function ConvertColectionToElemento(db:mongoDB.Db): Promise<elemento[]> {
   const col = await db.collection(COLLECTION_NAME_ELEMENTOS).find().toArray();
   let elementos:elemento[]=[]
-  col.forEach( (obj)=>{ const element:elemento = new elemento(obj.nombre,obj.tags,obj.stats,obj._id);elementos.push(element) } )
+  col.forEach( (obj)=>{ const element:elemento = new elemento(obj.nombre,obj.tags,obj.stats,obj.img,obj._id);elementos.push(element) } )
   return elementos
 }
 export async function ConvertColectionToTag(db:mongoDB.Db): Promise<Subsecciones[]> {
@@ -28,7 +28,7 @@ export async function ConvertColectionToTag(db:mongoDB.Db): Promise<Subsecciones
   return tags
 }
 export async function ConvertDocumentToElemento(document:mongoDB.WithId<mongoDB.BSON.Document>) :Promise<elemento>{
-  let element:elemento = new elemento( document.nombre,document.tags,document.stats,document._id )
+  let element:elemento = new elemento( document.nombre,document.tags,document.stats,document.img,document._id )
   return element
 }
 
