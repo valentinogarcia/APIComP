@@ -36,9 +36,10 @@ export default {
     updateTag:(async (_req, _res) => {
         try {
             const tag = _req.body as tag
+            const _id= new mongoDB.ObjectId(_req.params.tag)
             console.log(tag);
             
-            collections.tags?.findOneAndReplace( {nombre:_req.params.tag} , tag)
+            collections.tags?.findOneAndReplace( {_id:_id} , tag)
             return _res.status(200).send("mando may guey")
         } catch (error) {
             _res.status(400).send("el que dice error es puto");
@@ -46,7 +47,11 @@ export default {
     }),
     
     deleteTag:(async (_req, _res) => {
+      console.log(_req);
+      
         try {
+          console.log(_req.body);
+          
           const r = await collections.tags?.deleteOne( { nombre: _req.body.nombre } );
       
           if (r && r.deletedCount) {

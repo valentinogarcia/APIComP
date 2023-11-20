@@ -2,7 +2,8 @@
 import * as mongoDB from "mongodb";
 import { elemento} from '../../models/elemento';
 import { tag } from "../../models/tag";
-export const DB_CONN_STRING="mongodb://localhost:27017"
+import { Subsecciones } from "../../models/Subsecciones";
+export const DB_CONN_STRING="mongodb://127.0.0.1:27017"
 export const DB_NAME="Comp"
 export const COLLECTION_NAME_ELEMENTOS="elementos"
 export const COLLECTION_NAME_TAGS="tags"
@@ -17,17 +18,17 @@ export async function findElemento(elementos:elemento[],target:string) {
 export async function ConvertColectionToElemento(db:mongoDB.Db): Promise<elemento[]> {
   const col = await db.collection(COLLECTION_NAME_ELEMENTOS).find().toArray();
   let elementos:elemento[]=[]
-  col.forEach( (obj)=>{ const element:elemento = new elemento(obj.nombre,obj.tags,obj.stats);elementos.push(element) } )
+  col.forEach( (obj)=>{ const element:elemento = new elemento(obj.nombre,obj.tags,obj.stats,obj._id);elementos.push(element) } )
   return elementos
 }
-export async function ConvertColectionToTag(db:mongoDB.Db): Promise<tag[]> {
+export async function ConvertColectionToTag(db:mongoDB.Db): Promise<Subsecciones[]> {
   const col = await db.collection(COLLECTION_NAME_TAGS).find().toArray();
-  let tags:tag[]=[]
-  col.forEach( (obj)=>{ const element:tag = new tag(obj.seccion,obj.subsecciones);tags.push(element) } )
+  let tags:Subsecciones[]=[]
+  col.forEach( (obj)=>{ const element:Subsecciones = new Subsecciones(obj.nombre,obj.finales,obj.subsecciones,obj._id);tags.push(element) } )
   return tags
 }
 export async function ConvertDocumentToElemento(document:mongoDB.WithId<mongoDB.BSON.Document>) :Promise<elemento>{
-  let element:elemento = new elemento( document.nombre,document.tags,document.stats )
+  let element:elemento = new elemento( document.nombre,document.tags,document.stats,document._id )
   return element
 }
 

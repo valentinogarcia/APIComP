@@ -1,4 +1,5 @@
 import express, { json } from 'express';
+import cors from 'cors';
 import swaggerDocs from './swagger';
 import { paisRoutes } from "./routes/elementoRoutes";
 import { UserRoutes } from './routes/userRoutes';
@@ -6,6 +7,9 @@ import { tagRoutes} from './routes/tagRoutes';
 
 const app = express();
 app.use(express.json());
+app.use(cors({
+  origin:'http://localhost:4200'
+}) )
 const port = 3030
 
 paisRoutes(app)

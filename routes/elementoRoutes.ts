@@ -10,5 +10,5 @@ export function paisRoutes(app){
     app.post('/elementos',/*auth,*/ elementoControllers.addElemento);
     app.put('/elementos/:elemento',/*auth,*/ elementoControllers.updateElemento);
     app.patch('/elementos/:elemento',/*auth,*/ elementoControllers.changeElemento);
-    app.delete('/elementos', /*auth,*/elementoControllers.deleteElemento);
+    app.delete('/elementos/:_id', /*auth,*/elementoControllers.deleteElemento);
 }

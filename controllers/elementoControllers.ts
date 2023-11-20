@@ -2,7 +2,6 @@
 import {dbPromise,DB_CONN_STRING,DB_NAME,COLLECTION_NAME_ELEMENTOS,ConvertColectionToElemento,ConvertDocumentToElemento,getElemento,findElemento,collections} from '../utilities/DataBaseFunctions/DBFunctions'
 import { elemento } from '../models/elemento';
 import * as mongoDB from "mongodb";
-import { log } from 'console';
 
 export default {
     getElementos: (async (_req,_res)=> {   
@@ -10,8 +9,14 @@ export default {
     }),
 
     getElemento:(async(_req,_res)=> {
+      let _id:mongoDB.ObjectId=new mongoDB.ObjectId(_req.params.elemento)
+      console.log(_id);
+      
       const elementos = ConvertColectionToElemento(await dbPromise);
-      const elemento = (await elementos).find( (p) => p.nombre === _req.params.elemento  )
+      const elemento = (await elementos).find( (p) => p._id.toString()===_req.params.elemento
+       )
+      console.log(elemento);
+      
        _res.status(200).send(elemento)  
     }),
     
@@ -59,8 +64,9 @@ export default {
     }),
     
     deleteElemento:(async (_req, _res) => {
+      console.log(_req.params._id)
         try {
-          const r = await collections.elementos?.deleteOne( { nombre: _req.body.nombre } );
+          const r = await collections.elementos?.deleteOne( { _id: new mongoDB.ObjectId(_req.params._id) } );
       
           if (r && r.deletedCount) {
             _res.status(202).send(`Se fue a cagar! yei `);

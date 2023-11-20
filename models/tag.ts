@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { Subsecciones } from "./Subsecciones";
 
 export class tag{
