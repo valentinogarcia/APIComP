@@ -1,9 +1,8 @@
-export class user{
-    nombre:string;
-    hash:string;
-    salt:string;
+export class Admin{
+    mail:string;
+    superAdmin:boolean
 
-    constructor(InNombre:string,InHash:string,salt:string){ 
-        this.nombre=InNombre ; this.hash = InHash ; this.salt = salt;
+    constructor(InNombre:string,superAdmin:boolean){ 
+        this.mail=InNombre ;this.superAdmin=superAdmin;
     }
 }

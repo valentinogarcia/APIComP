@@ -3,10 +3,13 @@ import * as mongoDB from "mongodb";
 import { elemento} from '../../models/elemento';
 import { tag } from "../../models/tag";
 import { Subsecciones } from "../../models/Subsecciones";
+import { Admin } from "../../models/user";
 export const DB_CONN_STRING="mongodb://127.0.0.1:27017"
 export const DB_NAME="Comp"
 export const COLLECTION_NAME_ELEMENTOS="elementos"
 export const COLLECTION_NAME_TAGS="tags"
+export const COLLECTION_NAME_ADMINS="admins"
+export const COLLECTION_NAME_IMG="images"
 
 
 export const collections: { elementos?: mongoDB.Collection,tags?:mongoDB.Collection } = {}
@@ -20,6 +23,12 @@ export async function ConvertColectionToElemento(db:mongoDB.Db): Promise<element
   let elementos:elemento[]=[]
   col.forEach( (obj)=>{ const element:elemento = new elemento(obj.nombre,obj.tags,obj.stats,obj.img,obj._id);elementos.push(element) } )
   return elementos
+}
+export async function ConvertColectionToAdmins(db:mongoDB.Db): Promise<Admin[]> {
+  const col = await db.collection(COLLECTION_NAME_ADMINS).find().toArray();
+  let admins:Admin[]=[]
+  col.forEach( (obj)=>{ const a:Admin = new Admin(obj.mail,obj.superAdmin);admins.push(a) } )
+  return admins
 }
 export async function ConvertColectionToTag(db:mongoDB.Db): Promise<Subsecciones[]> {
   const col = await db.collection(COLLECTION_NAME_TAGS).find().toArray();

@@ -4,7 +4,7 @@ import swaggerDocs from './swagger';
 import { paisRoutes } from "./routes/elementoRoutes";
 import { UserRoutes } from './routes/userRoutes';
 import { tagRoutes} from './routes/tagRoutes';
-
+import { imageRoutes } from './routes/imageRoutes';
 const app = express();
 app.use(express.json());
 app.use(cors({
@@ -15,7 +15,8 @@ const port = 3030
 paisRoutes(app)
 UserRoutes(app)
 tagRoutes(app)
-
+imageRoutes(app)
+app.use('/images/uploads',express.static('./images'))
 
 async function main() {
   app.get('/', (_req , _res) => _res.send('Bienvenido a mi API REST!'));

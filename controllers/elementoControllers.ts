@@ -38,11 +38,13 @@ export default {
     }),
 
     updateElemento:(async (_req, _res) => {
+      console.log("bruh");
+      
         try {
             const elemento = _req.body as elemento
             console.log(elemento);
             
-            collections.elementos?.findOneAndReplace( {nombre:_req.params.elemento} , elemento)
+            collections.elementos?.findOneAndReplace( {_id:new mongoDB.ObjectId(_req.params.elemento)} , elemento)
             return _res.status(200).send("mando may guey")
         } catch (error) {
             _res.status(400).send("el que dice error es puto");
@@ -50,6 +52,8 @@ export default {
     }),
 
     changeElemento: (async (_req,_res)=> {
+      console.log(_req.body);
+      
         try {
           const elemento = _req.body as elemento
           const elementoOriginal = await getElemento( _req.params.elemento )
