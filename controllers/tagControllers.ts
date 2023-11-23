@@ -20,6 +20,8 @@ export default {
         try {
           console.log("no bitches")
           const newTag = _req.body as tag;
+          if(!newTag.nombre){return _res.status(400).send("Debe tener un nombre")}
+          if(!newTag.subsecciones){return _res.status(400).send("Debe tener un nombre")}
           console.log(newTag)
           const existeTag = await collections.tags?.findOne({ nombre: newTag.nombre });
           console.log("wat")
@@ -47,12 +49,12 @@ export default {
     }),
     
     deleteTag:(async (_req, _res) => {
-      console.log(_req);
+      //console.log(_req);
       
         try {
-          console.log(_req.body);
+          console.log(_req.params.id);
           
-          const r = await collections.tags?.deleteOne( { nombre: _req.body.nombre } );
+          const r = await collections.tags?.deleteOne( { _id:new mongoDB.ObjectId(_req.params.id)} );
       
           if (r && r.deletedCount) {
             _res.status(202).send(`Se fue a cagar! yei `);

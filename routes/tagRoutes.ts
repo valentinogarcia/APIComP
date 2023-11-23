@@ -9,5 +9,5 @@ export function tagRoutes(app){
     app.get('/tags/:tag', tagController.getTag);
     app.post('/tags',/*auth,*/ tagController.addTag);
     app.put('/tags/:tag',/*auth,*/ tagController.updateTag);
-    app.delete('/tags', /*auth,*/tagController.deleteTag);
+    app.delete('/tags/:id', /*auth,*/tagController.deleteTag);
 }
