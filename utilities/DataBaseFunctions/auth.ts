@@ -2,7 +2,6 @@ import * as jwt from "jsonwebtoken";
 import { JwtPayload } from "jsonwebtoken";
 import {Request,Response,NextFunction} from "express"
 import {loginToken,conectUserDataBase, confirm as confirmUser} from "./userFunctions"
-import { user } from "../../models/user";
 import { hash } from "bcryptjs";
 
 

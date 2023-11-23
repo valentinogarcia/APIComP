@@ -3,8 +3,7 @@ import {dbPromise,DB_CONN_STRING,DB_NAME,COLLECTION_NAME_TAGS,ConvertColectionTo
 import { elemento } from '../models/elemento';
 import * as mongoDB from "mongodb";
 import { log } from 'console';
-import { tag } from '../models/tag';
-
+import { Subsecciones } from '../models/Subsecciones';
 export default {
     getTags: (async (_req,_res)=> {   
          _res.status(200).send(await ConvertColectionToTag(await dbPromise)) 
@@ -19,7 +18,7 @@ export default {
     addTag:(async (_req,_res) => { 
         try {
           console.log("no bitches")
-          const newTag = _req.body as tag;
+          const newTag = _req.body as Subsecciones;
           if(!newTag.nombre){return _res.status(400).send("Debe tener un nombre")}
           if(!newTag.subsecciones){return _res.status(400).send("Debe tener un nombre")}
           console.log(newTag)
@@ -37,7 +36,7 @@ export default {
 
     updateTag:(async (_req, _res) => {
         try {
-            const tag = _req.body as tag
+            const tag = _req.body as Subsecciones
             const _id= new mongoDB.ObjectId(_req.params.tag)
             console.log(tag);
             

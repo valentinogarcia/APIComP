@@ -1,7 +1,6 @@
 
 import * as mongoDB from "mongodb";
 import { elemento} from '../../models/elemento';
-import { tag } from "../../models/tag";
 import { Subsecciones } from "../../models/Subsecciones";
 import { Admin } from "../../models/user";
 export const DB_CONN_STRING="mongodb://127.0.0.1:27017"
