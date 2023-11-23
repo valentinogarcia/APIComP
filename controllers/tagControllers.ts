@@ -20,7 +20,7 @@ export default {
           console.log("no bitches")
           const newTag = _req.body as Subsecciones;
           if(!newTag.nombre){return _res.status(400).send("Debe tener un nombre")}
-          if(!newTag.subsecciones){return _res.status(400).send("Debe tener un nombre")}
+          if(!newTag.subsecciones && !newTag.finales){return _res.status(400).send("Debe tener subsecciones o finales")}
           console.log(newTag)
           const existeTag = await collections.tags?.findOne({ nombre: newTag.nombre });
           console.log("wat")
@@ -38,6 +38,8 @@ export default {
         try {
             const tag = _req.body as Subsecciones
             const _id= new mongoDB.ObjectId(_req.params.tag)
+            if(!tag.nombre){return _res.status(400).send("Necesita un nombre")}
+            if(!tag.finales&&!tag.subsecciones){return _res.status(400).send("Necesita finales o subsecciones")}
             console.log(tag);
             
             collections.tags?.findOneAndReplace( {_id:_id} , tag)
@@ -51,8 +53,8 @@ export default {
       //console.log(_req);
       
         try {
+          if(!_req.parms.id){_res.status(400).send("no id")}
           console.log(_req.params.id);
-          
           const r = await collections.tags?.deleteOne( { _id:new mongoDB.ObjectId(_req.params.id)} );
       
           if (r && r.deletedCount) {

@@ -24,6 +24,8 @@ export default {
         try {
           console.log("no bitches")
           const newElemento = _req.body as elemento;
+          if(!newElemento.nombre){_res.status(400).send("Necesita un nombre")}
+          if(!newElemento.tags){_res.status(400).send("Necesita un tag")}
           console.log(newElemento)
           const existeElemento = await collections.elementos?.findOne({ nombre: newElemento.nombre });
           console.log("wat")
@@ -42,6 +44,8 @@ export default {
       
         try {
             const elemento = _req.body as elemento
+            if(!elemento.nombre){_res.status(400).send("Necesita un nombre")}
+            if(!elemento.tags){_res.status(400).send("Necesita un tag")}
             console.log(elemento);
             
             collections.elementos?.findOneAndReplace( {_id:new mongoDB.ObjectId(_req.params.elemento)} , elemento)
