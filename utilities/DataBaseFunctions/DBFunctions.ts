@@ -3,15 +3,18 @@ import * as mongoDB from "mongodb";
 import { elemento} from '../../models/elemento';
 import { Subsecciones } from "../../models/Subsecciones";
 import { Admin } from "../../models/user";
-export const DB_CONN_STRING="mongodb://127.0.0.1:27017"
-export const DB_NAME="Comp"
-export const COLLECTION_NAME_ELEMENTOS="elementos"
-export const COLLECTION_NAME_TAGS="tags"
-export const COLLECTION_NAME_ADMINS="admins"
-export const COLLECTION_NAME_IMG="images"
+import dotenv from 'dotenv'
+import { usuarios } from "./userFunctions";
+dotenv.config()
+export const DB_CONN_STRING=process.env.DB_CONN_STRING
+export const DB_NAME=process.env.DB_NAME
+export const COLLECTION_NAME_ELEMENTOS=process.env.COLLECTION_NAME_ELEMENTOS
+export const COLLECTION_NAME_TAGS=process.env.COLLECTION_NAME_TAGS
+export const COLLECTION_NAME_ADMINS=process.env.COLLECTION_NAME_ADMINS
+export const COLLECTION_NAME_IMG=process.env.COLLECTION_NAME_IMG
 
 
-export const collections: { elementos?: mongoDB.Collection,tags?:mongoDB.Collection } = {}
+export const collections: { elementos?: mongoDB.Collection,tags?:mongoDB.Collection,usuarios?:mongoDB.Collection } = {}
 
 export async function findElemento(elementos:elemento[],target:string) {
   return elementos.find( (elemento)=> elemento.nombre.toLowerCase() === target.toLocaleLowerCase() )
@@ -59,6 +62,8 @@ async function connectToDatabase () {
   collections.elementos = elementosCollection;
   const tagsCollection: mongoDB.Collection = db.collection(COLLECTION_NAME_TAGS);
   collections.tags=tagsCollection
+  collections.usuarios=db.collection(COLLECTION_NAME_ADMINS);
+    collections.usuarios.insertOne( new Admin("admin@gmail.com",true) )
        
   console.log(`Successfully connected to database: ${db.databaseName} and collection: ${elementosCollection.collectionName}`);
   return db;

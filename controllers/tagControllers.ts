@@ -53,7 +53,7 @@ export default {
       //console.log(_req);
       
         try {
-          if(!_req.parms.id){_res.status(400).send("no id")}
+          if(!_req.params.id){_res.status(400).send("no id")}
           console.log(_req.params.id);
           const r = await collections.tags?.deleteOne( { _id:new mongoDB.ObjectId(_req.params.id)} );
       
